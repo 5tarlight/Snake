@@ -19,7 +19,7 @@ public class GamePanel extends JPanel implements ActionListener {
     int applesEaten = 0;
     int appleX;
     int appleY;
-    char direction = 'R';
+    SnakeDriection direction = SnakeDriection.RIGHT;
     boolean running = false;
     Timer timer;
     Random random;
@@ -89,10 +89,10 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         switch (direction) {
-            case 'U' -> pos[0].y -= UNIT_SIZE;
-            case 'D' -> pos[0].y += UNIT_SIZE;
-            case 'L' -> pos[0].x -= UNIT_SIZE;
-            case 'R' -> pos[0].x += UNIT_SIZE;
+            case UP -> pos[0].y -= UNIT_SIZE;
+            case DOWN -> pos[0].y += UNIT_SIZE;
+            case LEFT -> pos[0].x -= UNIT_SIZE;
+            case RIGHT -> pos[0].x += UNIT_SIZE;
         }
     }
 
@@ -173,20 +173,20 @@ public class GamePanel extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
-                    if (direction != 'R')
-                        direction = 'L';
+                    if (direction != SnakeDriection.RIGHT)
+                        direction = SnakeDriection.LEFT;
                     break;
                 case KeyEvent.VK_RIGHT:
-                    if (direction != 'L')
-                        direction = 'R';
+                    if (direction != SnakeDriection.LEFT)
+                        direction = SnakeDriection.RIGHT;
                     break;
                 case KeyEvent.VK_UP:
-                    if (direction != 'D')
-                        direction = 'U';
+                    if (direction != SnakeDriection.DOWN)
+                        direction = SnakeDriection.UP;
                     break;
                 case KeyEvent.VK_DOWN:
-                    if (direction != 'U')
-                        direction = 'D';
+                    if (direction != SnakeDriection.UP)
+                        direction = SnakeDriection.DOWN;
                     break;
             }
         }
