@@ -1,8 +1,8 @@
 package com.github.yeahx4;
 
 public class Point {
-    int x;
-    int y;
+    public int x;
+    public int y;
 
     public Point() {
         int x = 0;

@@ -1,4 +1,7 @@
-package com.github.yeahx4;
+package com.github.yeahx4.panel;
+
+import com.github.yeahx4.Point;
+import com.github.yeahx4.SnakeDriection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,21 +18,21 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int GAME_UNITS = SCREEN_WIDTH * SCREEN_HEIGHT / UNIT_SIZE;
     static final int DELAY = 75;
     final Random random;
-    final Point apple;
-    final Point[] pos = new Point[GAME_UNITS];
+    final com.github.yeahx4.Point apple;
+    final com.github.yeahx4.Point[] pos = new com.github.yeahx4.Point[GAME_UNITS];
     int bodyParts = 6;
     int applesEaten = 0;
     SnakeDriection direction = SnakeDriection.RIGHT;
     boolean running = false;
     Timer timer;
 
-    GamePanel() {
+    public GamePanel() {
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
-        this.apple = new Point(0, 0);
+        this.apple = new com.github.yeahx4.Point(0, 0);
         startGame();
     }
 
