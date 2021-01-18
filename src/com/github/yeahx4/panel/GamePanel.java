@@ -1,7 +1,8 @@
 package com.github.yeahx4.panel;
 
-import com.github.yeahx4.Point;
-import com.github.yeahx4.SnakeDriection;
+import com.github.yeahx4.constant.Const;
+import com.github.yeahx4.constant.Point;
+import com.github.yeahx4.constant.SnakeDriection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,14 +13,10 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
-  static final int SCREEN_WIDTH = 600;
-  static final int SCREEN_HEIGHT = 600;
-  static final int UNIT_SIZE = 25;
-  static final int GAME_UNITS = SCREEN_WIDTH * SCREEN_HEIGHT / UNIT_SIZE;
-  static final int DELAY = 75;
+
   final Random random;
-  final com.github.yeahx4.Point apple;
-  final com.github.yeahx4.Point[] pos = new com.github.yeahx4.Point[GAME_UNITS];
+  final Point apple;
+  final Point[] pos = new Point[Const.GAME_UNITS];
   int bodyParts = 6;
   int applesEaten = 0;
   SnakeDriection direction = SnakeDriection.RIGHT;
@@ -28,11 +25,11 @@ public class GamePanel extends JPanel implements ActionListener {
 
   public GamePanel() {
     random = new Random();
-    this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+    this.setPreferredSize(new Dimension(Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT));
     this.setBackground(Color.BLACK);
     this.setFocusable(true);
     this.addKeyListener(new MyKeyAdapter());
-    this.apple = new com.github.yeahx4.Point(0, 0);
+    this.apple = new Point(0, 0);
     startGame();
   }
 
@@ -43,7 +40,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     newApple();
     running = true;
-    timer = new Timer(DELAY, this);
+    timer = new Timer(Const.DELAY, this);
     timer.start();
   }
 
@@ -56,14 +53,14 @@ public class GamePanel extends JPanel implements ActionListener {
   public void draw(Graphics g) {
     if (running) {
       // Draw grid
-      for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
-        g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
-        g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
+      for (int i = 0; i < Const.SCREEN_HEIGHT / Const.UNIT_SIZE; i++) {
+        g.drawLine(i * Const.UNIT_SIZE, 0, i * Const.UNIT_SIZE, Const.SCREEN_HEIGHT);
+        g.drawLine(0, i * Const.UNIT_SIZE, Const.SCREEN_WIDTH, i * Const.UNIT_SIZE);
       }
 
       // Draw Apple
       g.setColor(Color.RED);
-      g.fillOval(apple.x, apple.y, UNIT_SIZE, UNIT_SIZE);
+      g.fillOval(apple.x, apple.y, Const.UNIT_SIZE, Const.UNIT_SIZE);
 
       // Draw Snake
       for (int i = 0; i < bodyParts; i++) {
@@ -72,7 +69,7 @@ public class GamePanel extends JPanel implements ActionListener {
         } else {
           g.setColor(new Color(45, 180, 0));
         }
-        g.fillRect(pos[i].x, pos[i].y, UNIT_SIZE, UNIT_SIZE);
+        g.fillRect(pos[i].x, pos[i].y, Const.UNIT_SIZE, Const.UNIT_SIZE);
       }
       drawScore(g);
     } else {
@@ -81,8 +78,8 @@ public class GamePanel extends JPanel implements ActionListener {
   }
 
   public void newApple() {
-    apple.x = random.nextInt(SCREEN_WIDTH / UNIT_SIZE) * UNIT_SIZE;
-    apple.y = random.nextInt(SCREEN_HEIGHT / UNIT_SIZE) * UNIT_SIZE;
+    apple.x = random.nextInt(Const.SCREEN_WIDTH / Const.UNIT_SIZE) * Const.UNIT_SIZE;
+    apple.y = random.nextInt(Const.SCREEN_HEIGHT / Const.UNIT_SIZE) * Const.UNIT_SIZE;
   }
 
   public void move() {
@@ -92,10 +89,10 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     switch (direction) {
-      case UP -> pos[0].y -= UNIT_SIZE;
-      case DOWN -> pos[0].y += UNIT_SIZE;
-      case LEFT -> pos[0].x -= UNIT_SIZE;
-      case RIGHT -> pos[0].x += UNIT_SIZE;
+      case UP -> pos[0].y -= Const.UNIT_SIZE;
+      case DOWN -> pos[0].y += Const.UNIT_SIZE;
+      case LEFT -> pos[0].x -= Const.UNIT_SIZE;
+      case RIGHT -> pos[0].x += Const.UNIT_SIZE;
     }
   }
 
@@ -121,7 +118,7 @@ public class GamePanel extends JPanel implements ActionListener {
       running = false;
     }
     // Head touches right border
-    if (pos[0].x > SCREEN_WIDTH) {
+    if (pos[0].x > Const.SCREEN_WIDTH) {
       running = false;
     }
     // Head touches top border
@@ -129,7 +126,7 @@ public class GamePanel extends JPanel implements ActionListener {
       running = false;
     }
     // Head touches bottom border
-    if (pos[0].y > SCREEN_HEIGHT) {
+    if (pos[0].y > Const.SCREEN_HEIGHT) {
       running = false;
     }
 
@@ -144,7 +141,7 @@ public class GamePanel extends JPanel implements ActionListener {
     FontMetrics metrics1 = getFontMetrics(g.getFont());
 
     String str = "Score: " + applesEaten;
-    int stringX = (SCREEN_WIDTH - metrics1.stringWidth(str)) / 2;
+    int stringX = (Const.SCREEN_WIDTH - metrics1.stringWidth(str)) / 2;
     g.drawString(str, stringX, g.getFont().getSize());
   }
 
@@ -157,8 +154,8 @@ public class GamePanel extends JPanel implements ActionListener {
     FontMetrics metrics = getFontMetrics(g.getFont());
 
     String str = "Game Over";
-    int stringX = (SCREEN_WIDTH - metrics.stringWidth(str)) / 2;
-    g.drawString(str, stringX, SCREEN_HEIGHT / 2);
+    int stringX = (Const.SCREEN_WIDTH - metrics.stringWidth(str)) / 2;
+    g.drawString(str, stringX, Const.SCREEN_HEIGHT / 2);
   }
 
   @Override

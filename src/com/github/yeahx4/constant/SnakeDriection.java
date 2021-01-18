@@ -1,4 +1,4 @@
-package com.github.yeahx4;
+package com.github.yeahx4.constant;
 
 public enum SnakeDriection {
   UP,
