@@ -17,8 +17,7 @@ public class GamePanel extends JPanel implements ActionListener {
     final Point[] pos = new Point[GAME_UNITS];
     int bodyParts = 6;
     int applesEaten = 0;
-    int appleX;
-    int appleY;
+    Point apple;
     SnakeDriection direction = SnakeDriection.RIGHT;
     boolean running = false;
     Timer timer;
@@ -30,6 +29,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
+        this.apple = new Point(0, 0);
         startGame();
     }
 
@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
             // Draw Apple
             g.setColor(Color.RED);
-            g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+            g.fillOval(apple.x, apple.y, UNIT_SIZE, UNIT_SIZE);
 
             // Draw Snake
             for (int i = 0; i < bodyParts; i++) {
@@ -78,8 +78,8 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void newApple() {
-        appleX = random.nextInt(SCREEN_WIDTH / UNIT_SIZE) * UNIT_SIZE;
-        appleY = random.nextInt(SCREEN_HEIGHT / UNIT_SIZE) * UNIT_SIZE;
+        apple.x = random.nextInt(SCREEN_WIDTH / UNIT_SIZE) * UNIT_SIZE;
+        apple.y = random.nextInt(SCREEN_HEIGHT / UNIT_SIZE) * UNIT_SIZE;
     }
 
     public void move() {
@@ -97,7 +97,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void checkApple() {
-        if ((pos[0].x == appleX) && pos[0].y == appleY) {
+        if ((pos[0].x == apple.x) && pos[0].y == apple.y) {
             bodyParts++;
             applesEaten++;
             newApple();
